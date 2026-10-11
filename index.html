@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>SPACE STRIKE v1.0</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Animated Galaxy Background -->
+    <div class="galaxy-background"></div>
+    <div class="nebula-overlay"></div>
+    <div class="stars-layer" id="starsLayer"></div>
+    
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="screen">
+        <div class="loading-container">
+            <h1 class="game-title-load">SPACE STRIKE</h1>
+            <p class="version-text">Version 1.0 - Galactic Edition</p>
+            <div class="loading-bar-wrapper">
+                <div class="loading-bar">
+                    <div id="loadingFill" class="loading-fill"></div>
+                </div>
+            </div>
+            <p id="loadingText" class="loading-status">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen hidden">
+        <div class="menu-container">
+            <h1 class="game-title">SPACE STRIKE</h1>
+            <p class="tagline">Enter Pilot ID</p>
+            <div class="login-form">
+                <input type="text" id="usernameInput" class="text-input" placeholder="Username" maxlength="20">
+                <p id="loginError" class="error-text hidden">Please enter a username</p>
+                <button id="loginBtn" class="menu-btn">LOGIN</button>
+                <button id="newProfileBtn" class="menu-btn secondary">REGISTER</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Menu -->
+    <div id="mainMenu" class="screen hidden">
+        <!-- Animated Background Elements -->
+        <canvas id="menuBackgroundCanvas" class="menu-bg-canvas"></canvas>
+        
+        <div class="main-menu-layout">
+            <!-- Left Panel: Profile & Stats -->
+            <div class="menu-left-panel">
+                <div class="pilot-card">
+                    <div class="pilot-avatar">
+                        <div class="avatar-icon" id="profileAvatar">
+                            <!-- Pilot emoji as fallback -->
+                            <div style="font-size: 64px; text-align: center; line-height: 120px;">👨‍🚀</div>
+                        </div>
+                        <div class="pilot-status online">ONLINE</div>
+                    </div>
+                    <h2 class="pilot-name" id="welcomeText">PILOT</h2>
+                    <div class="pilot-rank">RANK: ACE</div>
+                    
+                    <div class="pilot-stats">
+                        <div class="stat-box">
+                            <div class="stat-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-label">LEVEL</div>
+                                <div class="stat-value" id="profileLevel">1</div>
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2" stroke="#000" stroke-width="1.5" fill="none"/>
+                                </svg>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-label">COINS</div>
+                                <div class="stat-value" id="profileCoins">0</div>
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M6 9l6-6 6 6v11a2 2 0 01-2 2H8a2 2 0 01-2-2V9z"/>
+                                    <path d="M12 3v6m-3 9h6" stroke="#000" stroke-width="1.5" fill="none"/>
+                                </svg>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-label">WINS</div>
+                                <div class="stat-value" id="profileWins">0</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="xp-progress">
+                        <div class="xp-label">
+                            <span>EXPERIENCE</span>
+                            <span id="xpText">0 / 100</span>
+                        </div>
+                        <div class="xp-bar">
+                            <div class="xp-fill" id="xpFill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-actions">
+                        <button id="leaderboardBtn" class="quick-btn" title="Leaderboard">
+                            <span class="quick-icon">
+                                <div style="font-size:28px;">📊</div>
+                            </span>
+                            <span class="quick-label">RANKS</span>
+                        </button>
+                        <button id="inventoryBtn" class="quick-btn" title="Inventory">
+                            <span class="quick-icon">
+                                <div style="font-size:28px;">🎒</div>
+                            </span>
+                            <span class="quick-label">ITEMS</span>
+                        </button>
+                        <button id="settingsBtn" class="quick-btn" title="Settings">
+                            <span class="quick-icon">
+                                <div style="font-size:28px;">⚙️</div>
+                            </span>
+                            <span class="quick-label">SETUP</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Center Panel: Main Title & Game Modes -->
+            <div class="menu-center-panel">
+                <div class="title-section">
+                    <h1 class="game-title-main">SPACE STRIKE</h1>
+                    <p class="game-subtitle">Galactic Combat Simulator</p>
+                    <div class="title-underline"></div>
+                </div>
+                
+                <div class="game-modes-section">
+                    <h3 class="section-title">
+                        <span style="font-size:20px;margin-right:8px;">⚔️</span>
+                        COMBAT MODES
+                    </h3>
+                    <div class="mode-buttons">
+                        <button id="playBtn" class="mode-btn primary-mode">
+                            <div class="mode-icon">
+                                <div style="font-size:48px;">⚡</div>
+                            </div>
+                            <div class="mode-info">
+                                <div class="mode-name">QUICK PLAY</div>
+                                <div class="mode-desc">Jump into instant action</div>
+                            </div>
+                        </button>
+                        
+                        <button id="adventureBtn" class="mode-btn">
+                            <div class="mode-icon">
+                                <div style="font-size:48px;">🗺️</div>
+                            </div>
+                            <div class="mode-info">
+                                <div class="mode-name">ADVENTURE MODE</div>
+                                <div class="mode-desc">50 epic campaign missions</div>
+                            </div>
+                        </button>
+                        
+                        <button id="arenaBtn" class="mode-btn">
+                            <div class="mode-icon">
+                                <div style="font-size:48px;">🤖</div>
+                            </div>
+                            <div class="mode-info">
+                                <div class="mode-name">BOT ARENA</div>
+                                <div class="mode-desc">Challenge AI opponents</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="management-section">
+                    <h3 class="section-title">
+                        <span style="font-size:20px;margin-right:8px;">🚀</span>
+                        FLEET MANAGEMENT
+                    </h3>
+                    <div class="management-buttons">
+                        <button id="hangarBtn" class="mgmt-btn">
+                            <span class="mgmt-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2l8 4v8l-8 8-8-8V6l8-4z"/>
+                                    <path d="M12 10l4-2M8 8l4 2v8"/>
+                                </svg>
+                                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:24px;">✈️</div>
+                            </span>
+                            <span class="mgmt-text">HANGAR</span>
+                            <span class="mgmt-badge">10</span>
+                        </button>
+                        
+                        <button id="gachaBtn" class="mgmt-btn highlight">
+                            <span class="mgmt-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="4" y="8" width="16" height="12" rx="2"/>
+                                    <path d="M8 8V6a4 4 0 018 0v2"/>
+                                    <circle cx="12" cy="14" r="2"/>
+                                </svg>
+                                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:24px;">🎁</div>
+                            </span>
+                            <span class="mgmt-text">RECRUIT</span>
+                            <span class="mgmt-badge pulse">NEW</span>
+                        </button>
+                        
+                        <button id="upgradeBtn" class="mgmt-btn">
+                            <span class="mgmt-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 4"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:24px;">⚙️</div>
+                            </span>
+                            <span class="mgmt-text">UPGRADES</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <button id="logoutBtn" class="logout-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;display:inline-block;vertical-align:middle;margin-right:6px">
+                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+                        <polyline points="16 17 21 12 16 7"/>
+                        <line x1="21" y1="12" x2="9" y2="12"/>
+                    </svg>
+                    DISCONNECT
+                </button>
+            </div>
+            
+            <!-- Right Panel: News & Updates -->
+            <div class="menu-right-panel">
+                <div class="news-panel">
+                    <h3 class="panel-title">
+                        <span style="font-size:18px;margin-right:6px;">📡</span>
+                        MISSION BRIEFING
+                    </h3>
+                    <div class="news-content">
+                        <div class="news-item">
+                            <div class="news-tag new">NEW</div>
+                            <div class="news-title">Shield Powerup Added!</div>
+                            <div class="news-text">10-second invulnerability with visual effects</div>
+                        </div>
+                        <div class="news-item">
+                            <div class="news-tag">UPDATE</div>
+                            <div class="news-title">Progressive Bosses</div>
+                            <div class="news-text">5 unique bosses in Quick Play mode</div>
+                        </div>
+                        <div class="news-item">
+                            <div class="news-tag">INFO</div>
+                            <div class="news-title">Coin System</div>
+                            <div class="news-text">Earn 1 coin per target destroyed</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tips-panel">
+                    <h3 class="panel-title">
+                        <span style="font-size:18px;margin-right:6px;">💡</span>
+                        PILOT TIPS
+                    </h3>
+                    <div class="tip-content">
+                        <div class="tip-item">
+                            <span class="tip-icon">
+                                <div style="font-size:20px;">🎯</div>
+                            </span>
+                            <span class="tip-text">Collect powerups for advantages</span>
+                        </div>
+                        <div class="tip-item">
+                            <span class="tip-icon">
+                                <div style="font-size:20px;">🛡️</div>
+                            </span>
+                            <span class="tip-text">Shield grants full invulnerability</span>
+                        </div>
+                        <div class="tip-item">
+                            <span class="tip-icon">
+                                <div style="font-size:20px;">🚀</div>
+                            </span>
+                            <span class="tip-text">Use missiles on tough enemies</span>
+                        </div>
+                        <div class="tip-item">
+                            <span class="tip-icon">
+                                <div style="font-size:20px;">⚡</div>
+                            </span>
+                            <span class="tip-text">Each fighter has unique abilities</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-panel">
+                    <h3 class="panel-title">📈 SESSION STATS</h3>
+                    <div class="session-stats">
+                        <div class="session-stat">
+                            <span class="stat-number" id="totalKills">0</span>
+                            <span class="stat-name">Total Kills</span>
+                        </div>
+                        <div class="session-stat">
+                            <span class="stat-number" id="bestScore">0</span>
+                            <span class="stat-name">Best Score</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fighter Hangar -->
+    <div id="hangarScreen" class="screen hidden">
+        <div class="wide-container">
+            <h2 class="screen-title">FIGHTER HANGAR</h2>
+            <div id="fighterGrid" class="fighter-grid"></div>
+            <button id="hangarBackBtn" class="menu-btn secondary">BACK</button>
+        </div>
+    </div>
+
+    <!-- Gacha Screen -->
+    <div id="gachaScreen" class="screen hidden">
+        <div class="menu-container">
+            <h2 class="screen-title">RECRUIT FIGHTERS</h2>
+            <p class="gacha-info">Your Coins: <span id="gachaCoins">0</span></p>
+            <div class="gacha-rates">
+                <p class="small-text">Drop Rates:</p>
+                <p class="small-text">★★★★ LEGENDARY: 5%</p>
+                <p class="small-text">★★★ EPIC: 15%</p>
+                <p class="small-text">★★ RARE: 30%</p>
+                <p class="small-text">★ COMMON: 50%</p>
+            </div>
+            <button id="singlePullBtn" class="menu-btn">SINGLE PULL (200 Coins)</button>
+            <button id="multiPullBtn" class="menu-btn">10-PULL (1800 Coins)</button>
+            <button id="gachaBackBtn" class="menu-btn secondary">BACK</button>
+        </div>
+    </div>
+
+    <!-- Gacha Result -->
+    <div id="gachaResultScreen" class="screen hidden">
+        <div class="menu-container">
+            <h2 class="screen-title">RECRUITMENT RESULT</h2>
+            <div id="gachaResultContent"></div>
+            <button id="gachaResultOkBtn" class="menu-btn">OK</button>
+        </div>
+    </div>
+
+    <!-- Adventure Screen -->
+    <div id="adventureScreen" class="screen hidden">
+        <div class="wide-container">
+            <h2 class="screen-title">ADVENTURE MODE</h2>
+            <div id="chapterGrid" class="chapter-grid"></div>
+            <button id="adventureBackBtn" class="menu-btn secondary">BACK</button>
+        </div>
+    </div>
+
+    <!-- Level Select -->
+    <div id="levelSelectScreen" class="screen hidden">
+        <div class="wide-container">
+            <h2 class="screen-title" id="levelSelectTitle">CHAPTER 1</h2>
+            <div id="levelGrid" class="level-grid"></div>
+            <button id="levelSelectBackBtn" class="menu-btn secondary">BACK</button>
+        </div>
+    </div>
+
+    <!-- Arena Screen -->
+    <div id="arenaScreen" class="screen hidden">
+        <div class="menu-container">
+            <h2 class="screen-title">BOT ARENA</h2>
+            <p class="info-text">Fight against AI-controlled opponents</p>
+            <div class="difficulty-select">
+                <button class="difficulty-btn" data-difficulty="easy">EASY</button>
+                <button class="difficulty-btn" data-difficulty="medium">MEDIUM</button>
+                <button class="difficulty-btn" data-difficulty="hard">HARD</button>
+            </div>
+            <button id="arenaBackBtn" class="menu-btn secondary">BACK</button>
+        </div>
+    </div>
+
+    <!-- Inventory Screen -->
+    <div id="inventoryScreen" class="screen hidden">
+        <div class="menu-container">
+            <h2 class="screen-title">INVENTORY</h2>
+            <div class="inventory-grid">
+                <div class="inventory-item">
+                    <p class="item-name">Health Potion</p>
+                    <p class="item-count" id="healthPotionCount">0</p>
+                    <button class="use-item-btn" id="useHealthPotionBtn">USE</button>
+                </div>
+                <div class="inventory-item">
+                    <p class="item-name">Shield Boost</p>
+                    <p class="item-count" id="shieldBoostCount">0</p>
+                    <p class="item-note">Use in-game</p>
+                </div>
+                <div class="inventory-item">
+                    <p class="item-name">Damage Boost</p>
+                    <p class="item-count" id="damageBoostCount">0</p>
+                    <p class="item-note">Use in-game</p>
+                </div>
+            </div>
+            <button id="inventoryBackBtn" class="menu-btn secondary">BACK</button>
+        </div>
+    </div>
+
+    <!-- Upgrade Screen -->
+    <div id="upgradeScreen" class="screen hidden">
+        <div class="menu-container">
+            <h2 class="screen-title">UPGRADES</h2>
+            <p class="info-text">Your Coins: <span id="upgradeCoins">0</span></p>
+            <div class="upgrade-list">
+                <div class="upgrade-item">
+                    <p class="upgrade-name">Max Health +10</p>
+                    <p class="upgrade-cost">Cost: 500 Coins</p>
+                    <button class="upgrade-btn" data-upgrade="health">UPGRADE</button>
+                </div>
+                <div class="upgrade-item">
+                    <p class="upgrade-name">Movement Speed +10%</p>
+                    <p class="upgrade-cost">Cost: 400 Coins</p>
+                    <button class="upgrade-btn" data-upgrade="speed">UPGRADE</button>
+                </div>
+                <div class="upgrade-item">
+                    <p class="upgrade-name">Damage +2</p>
+                    <p class="upgrade-cost">Cost: 600 Coins</p>
+                    <button class="upgrade-btn" data-upgrade="damage">UPGRADE</button>
+                </div>
+            </div>
+            <button id="upgradeBackBtn" class="menu-btn secondary">BACK</button>
+        </div>
+    </div>
+
+    <!-- Leaderboard Screen -->
+    <div id="leaderboardScreen" class="screen hidden">
+        <div class="menu-container">
+            <h2 class="screen-title">LEADERBOARD</h2>
+            <p class="info-text">Top Pilots</p>
+            <div id="leaderboardList" class="leaderboard-list"></div>
+            <button id="leaderboardBackBtn" class="menu-btn secondary">BACK</button>
+        </div>
+    </div>
+
+    <!-- Settings Screen -->
+    <div id="settingsScreen" class="screen hidden">
+        <div class="menu-container">
+            <h2 class="screen-title">SETTINGS</h2>
+            <div class="settings-list">
+                <div class="setting-item">
+                    <label class="setting-label">Sound Effects:</label>
+                    <input type="checkbox" id="soundToggle" class="setting-toggle" checked>
+                </div>
+                <div class="setting-item">
+                    <label class="setting-label">Music:</label>
+                    <input type="checkbox" id="musicToggle" class="setting-toggle" checked>
+                </div>
+                <div class="controls-info">
+                    <p><strong>CONTROLS:</strong></p>
+                    <p>WASD / Arrow Keys - Move</p>
+                    <p>SPACE - Shoot</p>
+                    <p>X - Missile</p>
+                    <p>C - Special Ability</p>
+                    <p>ESC - Pause</p>
+                </div>
+                <button id="resetDataBtn" class="menu-btn danger">RESET ALL DATA</button>
+            </div>
+            <button id="settingsBackBtn" class="menu-btn secondary">BACK</button>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="gameScreen" class="screen hidden">
+        <canvas id="gameCanvas"></canvas>
+        
+        <!-- HUD - Unified Header -->
+        <div id="hud">
+            <div class="hud-header">
+                <!-- Top Row: Combat Status -->
+                <div class="hud-row hud-row-top">
+                    <!-- Health -->
+                    <div class="hud-section hud-health">
+                        <span class="hud-label">HEALTH</span>
+                        <div class="hud-content">
+                            <div class="health-bar">
+                                <div id="healthFill" class="health-fill"></div>
+                            </div>
+                            <span id="healthText" class="health-value">100</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Targets -->
+                    <div class="hud-section hud-targets">
+                        <span class="hud-label">TARGETS</span>
+                        <div class="hud-content">
+                            <span class="hud-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <circle cx="12" cy="12" r="6"/>
+                                    <circle cx="12" cy="12" r="2"/>
+                                </svg>
+                            </span>
+                            <span id="targetsCount" class="hud-value">0</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Score -->
+                    <div class="hud-section hud-score">
+                        <span class="hud-label">SCORE</span>
+                        <div class="hud-content">
+                            <span class="hud-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </span>
+                            <span id="scoreCount" class="hud-value">0</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Timer -->
+                    <div class="hud-section hud-timer">
+                        <span class="hud-label">TIME</span>
+                        <div class="hud-content">
+                            <span class="hud-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 4"/>
+                                </svg>
+                            </span>
+                            <span id="timerDisplay" class="hud-value">00:00</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Boss Health -->
+                    <div class="hud-section hud-boss" id="bossHealthContainer" style="display:none;">
+                        <span class="hud-label" id="bossName">BOSS</span>
+                        <div class="hud-content">
+                            <div class="boss-health-bar">
+                                <div id="bossHealthFill" class="boss-health-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Row: Weapons & Abilities -->
+                <div class="hud-row hud-row-bottom">
+                    <!-- Missiles -->
+                    <div class="hud-section hud-missiles">
+                        <span class="hud-label">MISSILES</span>
+                        <div class="hud-content">
+                            <span class="hud-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px">
+                                    <path d="M12 2l8 4v8l-8 8-8-8V6l8-4z"/>
+                                    <path d="M12 10l4-2M8 8l4 2v8" stroke="#000" fill="none"/>
+                                </svg>
+                            </span>
+                            <span id="missileCount" class="hud-value">3</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Ability -->
+                    <div class="hud-section hud-ability">
+                        <span class="hud-label">ABILITY</span>
+                        <div class="hud-content">
+                            <span class="hud-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px">
+                                    <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"/>
+                                </svg>
+                            </span>
+                            <span id="abilityStatus" class="hud-value ability-value">READY</span>
+                            <div id="abilityCooldownBar" class="ability-cooldown-bar">
+                                <div id="abilityCooldownFill" class="ability-cooldown-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Fighter Type (acts as "weapon") -->
+                    <div class="hud-section hud-fighter">
+                        <span class="hud-label">FIGHTER</span>
+                        <div class="hud-content">
+                            <span class="hud-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px">
+                                    <path d="M12 2l8 4v8l-8 8-8-8V6l8-4z"/>
+                                    <path d="M12 10l4-2M8 8l4 2v8" stroke="#000" fill="none"/>
+                                </svg>
+                            </span>
+                            <span id="fighterName" class="hud-value">FALCON</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Active Supplies -->
+                    <div class="hud-section hud-supplies" id="activeSuppliesContainer" style="display:none;">
+                        <span class="hud-label">ACTIVE</span>
+                        <div class="hud-content" id="activeSuppliesList">
+                            <!-- Active effects appear here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="resultsScreen" class="screen hidden">
+        <div class="menu-container">
+            <h1 class="game-title">MISSION COMPLETE</h1>
+            <div class="results">
+                <p class="result-item">TARGETS DESTROYED: <span id="resultTargets">0</span></p>
+                <p class="result-item">FINAL SCORE: <span id="resultScore">0</span></p>
+                <p class="result-item">COINS EARNED: <span id="resultCoins">0</span></p>
+                <p class="result-item">XP EARNED: <span id="resultXP">0</span></p>
+            </div>
+            <button id="continueBtn" class="menu-btn">CONTINUE</button>
+            <button id="retryBtn" class="menu-btn secondary">RETRY</button>
+        </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameOverScreen" class="screen hidden">
+        <div class="menu-container">
+            <h1 class="game-title">GAME OVER</h1>
+            <div class="results">
+                <p class="result-item">TARGETS DESTROYED: <span id="finalTargets">0</span></p>
+                <p class="result-item">FINAL SCORE: <span id="finalScore">0</span></p>
+            </div>
+            <button id="restartBtn" class="menu-btn">RESTART</button>
+            <button id="menuBtn" class="menu-btn secondary">MAIN MENU</button>
+        </div>
+    </div>
+
+    <!-- Pause Screen -->
+    <div id="pauseScreen" class="screen hidden">
+        <div class="menu-container">
+            <h1 class="game-title">PAUSED</h1>
+            <button id="resumeBtn" class="menu-btn">RESUME</button>
+            <button id="quitBtn" class="menu-btn secondary">QUIT</button>
+        </div>
+    </div>
+
+    <!-- Mobile Controls (shown only on touch devices) -->
+    <div id="mobileControls" class="mobile-controls hidden">
+        <!-- Virtual Joystick -->
+        <div id="joystickContainer" class="joystick-container">
+            <div id="joystickBase" class="joystick-base"></div>
+            <div id="joystickStick" class="joystick-stick"></div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button id="mobileMissileBtn" class="mobile-btn missile-btn">
+                <span class="btn-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2l8 4v8l-8 8-8-8V6l8-4z"/>
+                    </svg>
+                </span>
+                <span class="btn-label">MISSILE</span>
+            </button>
+            <button id="mobileAbilityBtn" class="mobile-btn ability-btn">
+                <span class="btn-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"/>
+                    </svg>
+                </span>
+                <span class="btn-label">ABILITY</span>
+            </button>
+            <button id="mobileFireBtn" class="mobile-btn fire-btn">
+                <span class="btn-icon">🔫</span>
+                <span class="btn-label">FIRE</span>
+            </button>
+        </div>
+        
+        <!-- Pause Button -->
+        <button id="mobilePauseBtn" class="mobile-pause-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:24px;height:24px">
+                <rect x="6" y="4" width="4" height="16"/>
+                <rect x="14" y="4" width="4" height="16"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/auth-check.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/avatar-generator.js"></script>
+    <script src="js/mobile-responsive.js"></script>
+    <script src="js/fighters.js"></script>
+    <script src="js/chapters.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/mobile-controls.js"></script>
+</body>
+</html>

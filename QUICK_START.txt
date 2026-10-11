@@ -1,0 +1,62 @@
+╔══════════════════════════════════════════════════════════════╗
+║           SPACE STRIKE v1.0 - QUICK START GUIDE             ║
+╚══════════════════════════════════════════════════════════════╝
+
+🚀 HOW TO PLAY:
+
+1. Open Google Chrome
+2. Press Ctrl+O (or File > Open)
+3. Navigate to: C:\Users\User\OneDrive\Desktop\SPACE FIGHTER
+4. Select: index.html
+5. Click Open
+
+   OR
+
+1. Open File Explorer
+2. Go to: C:\Users\User\OneDrive\Desktop\SPACE FIGHTER
+3. Right-click index.html
+4. Select "Open with" > Google Chrome
+
+🎮 CONTROLS:
+
+WASD / Arrow Keys - Move
+SPACE - Shoot
+X - Fire Missile
+C - Special Ability
+ESC - Pause/Resume
+
+📋 FIRST TIME SETUP:
+
+1. Wait for loading screen (2-3 seconds)
+2. Enter a username (any name)
+3. Click "NEW PROFILE"
+4. You're in the Main Menu!
+
+🎯 WHAT TO TRY:
+
+→ QUICK PLAY: Jump straight into arcade action
+→ FIGHTER HANGAR: Select your ship (FALCON-X unlocked)
+→ RECRUIT FIGHTERS: Spend 1000 starting coins to unlock more
+→ ADVENTURE MODE: Play through 10 chapters, 50 levels
+→ BOT ARENA: Fight AI opponents
+→ INVENTORY: Use your 3 starting health potions
+→ UPGRADES: Improve your stats with coins
+
+💾 YOUR PROGRESS IS SAVED AUTOMATICALLY
+   (Local to this browser - don't clear browser data!)
+
+📚 FOR DETAILED INSTRUCTIONS:
+   See: PLAYTEST_INSTRUCTIONS.md
+   See: README.md
+
+🐛 IF SOMETHING BREAKS:
+   - Press F5 to refresh
+   - Check browser console (F12)
+   - See DEVELOPMENT_STATUS.md for known issues
+
+═══════════════════════════════════════════════════════════════
+
+          SPACE STRIKE - Destroy All Targets! 🚀
+                    Version 1.0
+
+═══════════════════════════════════════════════════════════════

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barrier Test</title>
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+            color: #0ff;
+            font-family: monospace;
+            padding: 20px;
+        }
+        #status {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.8);
+            padding: 20px;
+            border: 2px solid #0ff;
+            border-radius: 10px;
+        }
+        #info {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .good { color: #0f0; }
+        .bad { color: #f00; }
+    </style>
+</head>
+<body>
+    <div id="status">
+        <h2>🔍 Barrier Code Test</h2>
+        <div id="info">Loading...</div>
+    </div>
+
+    <script>
+        // Test if the code changes are loaded
+        const info = document.getElementById('info');
+        let html = '';
+
+        // Check 1: Variable exists
+        html += '<p><strong>Test 1: Variables Declared</strong></p>';
+        try {
+            if (typeof hudHeight !== 'undefined') {
+                html += '<p class="good">✅ hudHeight exists</p>';
+            } else {
+                html += '<p class="bad">❌ hudHeight NOT FOUND (file not loaded)</p>';
+            }
+        } catch(e) {
+            html += '<p class="bad">❌ Error: Variables not loaded</p>';
+        }
+
+        // Check 2: Function exists
+        html += '<p><strong>Test 2: Function Declared</strong></p>';
+        try {
+            if (typeof calculateHUDBoundary === 'function') {
+                html += '<p class="good">✅ calculateHUDBoundary() exists</p>';
+            } else {
+                html += '<p class="bad">❌ calculateHUDBoundary() NOT FOUND</p>';
+            }
+        } catch(e) {
+            html += '<p class="bad">❌ Error: Function not loaded</p>';
+        }
+
+        // Check 3: Load main.js to verify
+        html += '<p><strong>Test 3: Loading main.js</strong></p>';
+        
+        fetch('js/main.js')
+            .then(response => response.text())
+            .then(code => {
+                // Check for barrier collision code
+                if (code.includes('asteroid.y < gameplayTopBoundary')) {
+                    html += '<p class="good">✅ Asteroid barrier code FOUND</p>';
+                } else {
+                    html += '<p class="bad">❌ Asteroid barrier code NOT FOUND</p>';
+                }
+
+                if (code.includes('enemy.y < gameplayTopBoundary')) {
+                    html += '<p class="good">✅ Enemy barrier code FOUND</p>';
+                } else {
+                    html += '<p class="bad">❌ Enemy barrier code NOT FOUND</p>';
+                }
+
+                if (code.includes('console.log(\'HUD Boundary Calculated:\'')) {
+                    html += '<p class="good">✅ Debug logging code FOUND</p>';
+                } else {
+                    html += '<p class="bad">❌ Debug logging code NOT FOUND</p>';
+                }
+
+                // Check file timestamp
+                html += '<p><strong>Test 4: File Info</strong></p>';
+                html += '<p>File size: ' + code.length + ' characters</p>';
+                
+                // Summary
+                html += '<hr>';
+                if (code.includes('asteroid.y < gameplayTopBoundary') && 
+                    code.includes('enemy.y < gameplayTopBoundary')) {
+                    html += '<p class="good"><strong>✅ BARRIER CODE IS PRESENT IN FILE</strong></p>';
+                    html += '<p>If objects still pass through, you need to:</p>';
+                    html += '<ol>';
+                    html += '<li>Close browser completely</li>';
+                    html += '<li>Reopen browser</li>';
+                    html += '<li>Press <strong>Ctrl+Shift+R</strong> (or Cmd+Shift+R on Mac)</li>';
+                    html += '<li>Open console (F12) to see debug messages</li>';
+                    html += '</ol>';
+                } else {
+                    html += '<p class="bad"><strong>❌ BARRIER CODE NOT FOUND</strong></p>';
+                    html += '<p>The file may not have saved correctly.</p>';
+                }
+
+                info.innerHTML = html;
+            })
+            .catch(error => {
+                html += '<p class="bad">❌ Error loading main.js: ' + error + '</p>';
+                info.innerHTML = html;
+            });
+    </script>
+</body>
+</html>

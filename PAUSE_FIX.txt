@@ -1,0 +1,109 @@
+╔══════════════════════════════════════════════════════════════╗
+║              SPACE STRIKE - PAUSE KEY FIX (v1.1.1)           ║
+╚══════════════════════════════════════════════════════════════╝
+
+🔧 PROBLEM FIXED:
+ESC key was not pausing the game
+
+🐛 ROOT CAUSE:
+- ESC handler was placed AFTER the state check
+- Code was checking "if not PLAYING, return" before ESC could run
+- Duplicate keydown listener was conflicting
+
+✅ SOLUTION APPLIED:
+- Moved ESC handling to TOP of keydown listener
+- ESC now checked BEFORE state validation
+- Handles both pause (PLAYING → PAUSED) and resume (PAUSED → PLAYING)
+- Removed duplicate listener
+- Returns early after ESC to prevent interference
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🧪 HOW TO TEST THE FIX:
+
+1. Open the game: index.html
+2. Start Quick Play (or any game mode)
+3. During gameplay, press ESC
+   
+   ✅ SHOULD SEE:
+   - Game freezes immediately
+   - Pause menu appears over frozen game
+   - "PAUSED" title
+   - RESUME and QUIT buttons
+
+4. Press ESC again (or click RESUME)
+   
+   ✅ SHOULD SEE:
+   - Pause menu disappears
+   - Game continues from exact position
+   - All movement resumes
+
+5. Try multiple times:
+   - Press ESC → pauses
+   - Press ESC → resumes
+   - Press ESC → pauses
+   - Click RESUME → resumes
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 WHAT WAS CHANGED:
+
+BEFORE (broken):
+```javascript
+window.addEventListener('keydown', (e) => {
+    // ...
+    if (currentState !== GameState.PLAYING) return; // ← ESC blocked here!
+    
+    // Pause (never reached when not PLAYING)
+    if (e.key === 'escape') {
+        pauseGame();
+    }
+});
+```
+
+AFTER (fixed):
+```javascript
+window.addEventListener('keydown', (e) => {
+    // Handle ESC FIRST (before state check)
+    if (e.key === 'escape') {
+        if (currentState === GameState.PLAYING) {
+            pauseGame();
+            return;
+        } else if (currentState === GameState.PAUSED) {
+            resumeGame();
+            return;
+        }
+    }
+    
+    // Other keys only work during gameplay
+    if (currentState !== GameState.PLAYING) return;
+    // ...
+});
+```
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ STATUS: FIXED
+
+The ESC key now works correctly:
+→ ESC during gameplay = PAUSE
+→ ESC during pause = RESUME
+→ Works consistently every time
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎮 REFRESH YOUR BROWSER:
+
+If you have the game already open:
+1. Press F5 to refresh
+2. Or press Ctrl+Shift+R for hard refresh
+3. Test ESC key again
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+File Modified: js/main.js
+Lines Changed: Input handling section (approx line 138-175)
+Version: 1.1.1
+Date: October 8, 2026
+
+✅ READY TO TEST!

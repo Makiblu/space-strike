@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Registration API</title>
+</head>
+<body>
+    <h1>Test Registration</h1>
+    <button onclick="testRegistration()">Test Register API</button>
+    <pre id="result"></pre>
+
+    <script>
+        async function testRegistration() {
+            const resultEl = document.getElementById('result');
+            resultEl.textContent = 'Testing...';
+
+            try {
+                const response = await fetch('http://localhost:3000/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        username: 'testuser' + Date.now(),
+                        email: 'test' + Date.now() + '@example.com',
+                        password: 'test123456'
+                    })
+                });
+
+                const data = await response.json();
+                
+                resultEl.textContent = `Status: ${response.status}\n\n` + 
+                                      `Response:\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                resultEl.textContent = `Error: ${error.message}\n\n` +
+                                      `Make sure backend is running on port 3000`;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+╔══════════════════════════════════════════════════════════════╗
+║         SPACE STRIKE v1.1 - NEW FEATURES TEST GUIDE         ║
+╚══════════════════════════════════════════════════════════════╝
+
+🎯 WHAT'S NEW:
+1. Boss appears in Quick Play after 20 targets
+2. Pause screen shows game frozen in background
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🧪 TEST 1: BOSS SPAWNING IN QUICK PLAY
+
+Steps:
+1. Open index.html in Chrome
+2. Login/Create profile
+3. Click "QUICK PLAY"
+4. Destroy 20 enemy targets (red hexagons)
+   - Keep count in top HUD: "TARGETS: XX"
+5. After killing the 20th target:
+   - Wait 2 seconds
+   - A LARGE BOSS should appear from right side
+   - Boss health bar appears at top: "BOSS: [===]"
+   - Boss name shows: "ASTEROID KING"
+   - Regular enemies stop spawning
+
+✅ EXPECTED RESULTS:
+- Boss appears exactly at 20 targets
+- Boss is much larger than regular enemies
+- Boss health bar is visible
+- Boss moves up/down
+- Boss shoots projectiles at you
+- No more regular enemies spawn during boss
+
+❌ WHAT COULD GO WRONG:
+- Boss doesn't appear → Check console (F12) for errors
+- Boss appears multiple times → Report bug
+- Game crashes → Send error message
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🧪 TEST 2: IMPROVED PAUSE OVERLAY
+
+Steps:
+1. Start Quick Play (or any game mode)
+2. Move around, shoot some enemies
+3. Press ESC key
+
+✅ EXPECTED RESULTS:
+- Screen shows:
+  ✓ Your frozen game in the background
+  ✓ Dark semi-transparent overlay
+  ✓ "PAUSED" text in center
+  ✓ RESUME and QUIT buttons
+- Gameplay is frozen:
+  ✓ Your ship is stopped
+  ✓ Enemies are stopped
+  ✓ Projectiles are stopped
+  ✓ Asteroids are stopped
+
+4. Press ESC again (or click RESUME)
+
+✅ EXPECTED RESULTS:
+- Pause menu disappears
+- Game continues exactly where you left off
+- All movement resumes normally
+
+5. Pause again and click QUIT
+
+✅ EXPECTED RESULTS:
+- Returns to Main Menu
+- Game session ends
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎮 COMBINED TEST: PAUSE DURING BOSS FIGHT
+
+Steps:
+1. Start Quick Play
+2. Destroy 20 targets to spawn boss
+3. During boss fight, press ESC
+
+✅ EXPECTED RESULTS:
+- Boss is visible but frozen in background
+- Boss health bar still visible
+- Pause menu appears over frozen boss fight
+- Can resume and continue fighting
+- Can quit to abandon boss fight
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔍 VISUAL CHECKLIST:
+
+PAUSE SCREEN SHOULD SHOW:
+ [ ] Frozen game canvas in background
+ [ ] Dark transparent overlay (70% opacity)
+ [ ] "PAUSED" title in cyan
+ [ ] RESUME button (cyan)
+ [ ] QUIT button (outlined cyan)
+ [ ] Pause menu has cyan glowing border
+ [ ] Background is slightly visible
+
+BOSS APPEARANCE:
+ [ ] Boss is MUCH larger than enemies
+ [ ] Boss has irregular shape (not hexagon)
+ [ ] Boss name displays above it
+ [ ] Boss health bar at top of screen
+ [ ] Boss moves up and down
+ [ ] Boss fires projectiles
+ [ ] Boss has glowing white core
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ IF SOMETHING BREAKS:
+
+1. Press F12 to open browser console
+2. Look for red error messages
+3. Take a screenshot
+4. Note what you were doing when it broke
+5. Report: "I was [action], then [what broke]"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 TIPS:
+
+→ Boss in Quick Play uses Chapter 1 boss (medium difficulty)
+→ Boss has ~500 HP vs regular enemy's ~30 HP
+→ Use missiles (X key) and abilities (C key) against boss
+→ Pause works in ALL game modes (Quick Play, Adventure, Arena)
+→ Boss only spawns ONCE per Quick Play session
+→ If you die before 20 kills, boss won't spawn
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ QUICK TEST (2 minutes):
+
+1. Open game → Quick Play
+2. Kill 20 targets → Boss appears? YES/NO
+3. Press ESC → See frozen game behind? YES/NO
+4. Press ESC → Game resumes? YES/NO
+
+If all YES → Features working! ✅
+If any NO → Check console for errors ❌
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 STATUS: READY TO TEST
+
+Open: C:\Users\User\OneDrive\Desktop\SPACE FIGHTER\index.html
+
+Good luck, Pilot! o7
