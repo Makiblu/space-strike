@@ -153,6 +153,34 @@
             opacity: 0.6;
             pointer-events: none;
         }
+
+        .password-toggle-wrapper {
+            position: relative;
+        }
+
+        .password-toggle-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #00ffff;
+            cursor: pointer;
+            font-size: 1.2em;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .password-toggle-btn:hover {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -173,7 +201,12 @@
 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required autocomplete="current-password">
+                    <div class="password-toggle-wrapper">
+                        <input type="password" id="password" name="password" required autocomplete="current-password" style="padding-right: 45px;">
+                        <button type="button" class="password-toggle-btn" id="togglePassword" title="Show password">
+                            👁️
+                        </button>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn-primary">Login</button>
@@ -236,6 +269,17 @@
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+        });
+
+        // Password toggle functionality
+        const passwordInput = document.getElementById('password');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+
+        togglePasswordBtn.addEventListener('click', () => {
+            const type = passwordInput.type === 'password' ? 'text' : 'password';
+            passwordInput.type = type;
+            togglePasswordBtn.textContent = type === 'password' ? '👁️' : '🙈';
+            togglePasswordBtn.title = type === 'password' ? 'Show password' : 'Hide password';
         });
 
         // Form handling
