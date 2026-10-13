@@ -167,10 +167,9 @@
             border: none;
             color: #00ffff;
             cursor: pointer;
-            font-size: 1.2em;
             padding: 0;
-            width: 30px;
-            height: 30px;
+            width: 24px;
+            height: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -180,6 +179,11 @@
 
         .password-toggle-btn:hover {
             opacity: 1;
+        }
+
+        .password-toggle-btn svg {
+            width: 20px;
+            height: 20px;
         }
     </style>
 </head>
@@ -209,7 +213,14 @@
                     <div class="password-toggle-wrapper">
                         <input type="password" id="password" name="password" required minlength="6" autocomplete="new-password" style="padding-right: 45px;">
                         <button type="button" class="password-toggle-btn" id="togglePassword" title="Show password">
-                            👁️
+                            <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            <svg class="eye-off-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                <line x1="1" y1="1" x2="23" y2="23"></line>
+                            </svg>
                         </button>
                     </div>
                 </div>
@@ -219,7 +230,14 @@
                     <div class="password-toggle-wrapper">
                         <input type="password" id="confirmPassword" name="confirmPassword" required minlength="6" autocomplete="new-password" style="padding-right: 45px;">
                         <button type="button" class="password-toggle-btn" id="toggleConfirmPassword" title="Show password">
-                            👁️
+                            <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            <svg class="eye-off-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                <line x1="1" y1="1" x2="23" y2="23"></line>
+                            </svg>
                         </button>
                     </div>
                 </div>
@@ -292,18 +310,42 @@
         const togglePasswordBtn = document.getElementById('togglePassword');
         const toggleConfirmPasswordBtn = document.getElementById('toggleConfirmPassword');
 
+        // Password field toggle
+        const eyeIcon = togglePasswordBtn.querySelector('.eye-icon');
+        const eyeOffIcon = togglePasswordBtn.querySelector('.eye-off-icon');
+
         togglePasswordBtn.addEventListener('click', () => {
             const type = passwordInput.type === 'password' ? 'text' : 'password';
             passwordInput.type = type;
-            togglePasswordBtn.textContent = type === 'password' ? '👁️' : '🙈';
-            togglePasswordBtn.title = type === 'password' ? 'Show password' : 'Hide password';
+            
+            if (type === 'password') {
+                eyeIcon.style.display = 'block';
+                eyeOffIcon.style.display = 'none';
+                togglePasswordBtn.title = 'Show password';
+            } else {
+                eyeIcon.style.display = 'none';
+                eyeOffIcon.style.display = 'block';
+                togglePasswordBtn.title = 'Hide password';
+            }
         });
+
+        // Confirm password field toggle
+        const eyeIcon2 = toggleConfirmPasswordBtn.querySelector('.eye-icon');
+        const eyeOffIcon2 = toggleConfirmPasswordBtn.querySelector('.eye-off-icon');
 
         toggleConfirmPasswordBtn.addEventListener('click', () => {
             const type = confirmPasswordInput.type === 'password' ? 'text' : 'password';
             confirmPasswordInput.type = type;
-            toggleConfirmPasswordBtn.textContent = type === 'password' ? '👁️' : '🙈';
-            toggleConfirmPasswordBtn.title = type === 'password' ? 'Show password' : 'Hide password';
+            
+            if (type === 'password') {
+                eyeIcon2.style.display = 'block';
+                eyeOffIcon2.style.display = 'none';
+                toggleConfirmPasswordBtn.title = 'Show password';
+            } else {
+                eyeIcon2.style.display = 'none';
+                eyeOffIcon2.style.display = 'block';
+                toggleConfirmPasswordBtn.title = 'Hide password';
+            }
         });
 
         // Form handling
